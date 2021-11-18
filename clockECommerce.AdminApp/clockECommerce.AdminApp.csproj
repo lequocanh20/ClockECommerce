@@ -10,6 +10,12 @@
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="wwwroot\assets\demo\chart-area-demo.js" />
+    <None Include="wwwroot\assets\demo\chart-bar-demo.js" />
+    <None Include="wwwroot\assets\demo\chart-pie-demo.js" />
+    <None Include="wwwroot\assets\demo\datatables-demo.js" />
+    <None Include="wwwroot\assets\img\error-404-monochrome.svg" />
+    <None Include="wwwroot\js\scripts.js" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -48,6 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\clockECommerce.ApiIntegration\clockECommerce.ApiIntegration.csproj" />
     <ProjectReference Include="..\clockECommerce.Ultilities\clockECommerce.Ultilities.csproj" />
     <ProjectReference Include="..\clockECommerce.ViewModels\clockECommerce.ViewModels.csproj" />
   </ItemGroup>

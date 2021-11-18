@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace clbTinHoc.Data.EF
+namespace clockECommerce.Data.EF
 {
     public class clockECommerceDbContextFactory : IDesignTimeDbContextFactory<clockECommerceDbContext>
     {

@@ -6,24 +6,28 @@
 
   <ItemGroup>
     <Compile Remove="clockECommerce.AdminApp\**" />
+    <Compile Remove="clockECommerce.ApiIntegration\**" />
     <Compile Remove="clockECommerce.Application\**" />
     <Compile Remove="clockECommerce.BackendApi\**" />
     <Compile Remove="clockECommerce.Data\**" />
     <Compile Remove="clockECommerce.Ultilities\**" />
     <Compile Remove="clockECommerce.ViewModels\**" />
     <Content Remove="clockECommerce.AdminApp\**" />
+    <Content Remove="clockECommerce.ApiIntegration\**" />
     <Content Remove="clockECommerce.Application\**" />
     <Content Remove="clockECommerce.BackendApi\**" />
     <Content Remove="clockECommerce.Data\**" />
     <Content Remove="clockECommerce.Ultilities\**" />
     <Content Remove="clockECommerce.ViewModels\**" />
     <EmbeddedResource Remove="clockECommerce.AdminApp\**" />
+    <EmbeddedResource Remove="clockECommerce.ApiIntegration\**" />
     <EmbeddedResource Remove="clockECommerce.Application\**" />
     <EmbeddedResource Remove="clockECommerce.BackendApi\**" />
     <EmbeddedResource Remove="clockECommerce.Data\**" />
     <EmbeddedResource Remove="clockECommerce.Ultilities\**" />
     <EmbeddedResource Remove="clockECommerce.ViewModels\**" />
     <None Remove="clockECommerce.AdminApp\**" />
+    <None Remove="clockECommerce.ApiIntegration\**" />
     <None Remove="clockECommerce.Application\**" />
     <None Remove="clockECommerce.BackendApi\**" />
     <None Remove="clockECommerce.Data\**" />

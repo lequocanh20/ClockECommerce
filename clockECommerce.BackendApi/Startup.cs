@@ -1,7 +1,9 @@
-using clbTinHoc.Data.EF;
+using clockECommerce.Application.Catalog.Categories;
+using clockECommerce.Application.Catalog.Products;
 using clockECommerce.Application.Common;
 using clockECommerce.Application.System.Roles;
 using clockECommerce.Application.System.Users;
+using clockECommerce.Data.EF;
 using clockECommerce.Data.Entities;
 using clockECommerce.Ultilities.Constants;
 using clockECommerce.ViewModels.System.Users;
@@ -49,6 +51,8 @@ namespace clockECommerce.BackendApi
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IProductService, ProductService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSwaggerGen(c =>

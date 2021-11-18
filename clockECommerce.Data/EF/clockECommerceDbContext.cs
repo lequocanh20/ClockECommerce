@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace clbTinHoc.Data.EF
+namespace clockECommerce.Data.EF
 {
     public class clockECommerceDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
@@ -22,6 +22,8 @@ namespace clbTinHoc.Data.EF
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -34,5 +36,8 @@ namespace clbTinHoc.Data.EF
             //base.OnModelCreating(builder);
         }
         public DbSet<AppConfig> AppConfigs { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
     }
 }

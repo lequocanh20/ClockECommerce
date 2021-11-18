@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Catalog\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\clockECommerce.Data\clockECommerce.Data.csproj" />
     <ProjectReference Include="..\clockECommerce.Ultilities\clockECommerce.Ultilities.csproj" />
     <ProjectReference Include="..\clockECommerce.ViewModels\clockECommerce.ViewModels.csproj" />

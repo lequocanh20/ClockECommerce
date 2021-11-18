@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using clbTinHoc.Data.EF;
+using clockECommerce.Data.EF;
 
 namespace clockECommerce.Data.Migrations
 {
@@ -138,17 +138,17 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Key = "HomeTitle",
-                            Value = "This is home page of clb IT HUFLIT"
+                            Value = "This is home page of Clock ECommerce"
                         },
                         new
                         {
                             Key = "HomeKeyword",
-                            Value = "This is keyword of clb IT HUFLIT"
+                            Value = "This is keyword of Clock ECommerce"
                         },
                         new
                         {
                             Key = "HomeDescription",
-                            Value = "This is description of clb IT HUFLIT"
+                            Value = "This is description of Clock ECommerce"
                         });
                 });
 
@@ -180,7 +180,7 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "bd5fb9df-d902-4181-9b35-7122c75f9bee",
+                            ConcurrencyStamp = "6c79820c-a6f1-46c0-810b-e75d655e402f",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace clockECommerce.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "105a2fd2-0967-4906-a5f9-7edfbcb19d3c",
+                            ConcurrencyStamp = "1bc0eb50-0dfd-4894-a151-974028e542c3",
                             Dob = new DateTime(2000, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lequocanh.qa@gmail.com",
                             EmailConfirmed = true,
@@ -266,12 +266,159 @@ namespace clockECommerce.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "lequocanh.qa@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAELRi9A/5khNaL6R60bHlkj/fOymkDcBkUbeXEGTscq/rtQJgDlxQQnXFD++R036WtA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPqU78OnPQvSzHgZ2iHdFHk4rwaYIJTAqBYsCF33wlZvftez96q1ZDxeuaTNCoOVvQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Daniel Wellington"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Casio"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Citizen"
+                        });
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasMaxLength(100000000)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductImage")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("Stock")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Thumbnail")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<decimal>("originPrice")
+                        .HasMaxLength(100000000)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            DateCreated = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "",
+                            Details = "",
+                            Name = "DANIEL WELLINGTON DW00100414",
+                            Price = 6600000m,
+                            Stock = 5,
+                            originPrice = 6000000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            DateCreated = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "",
+                            Details = "",
+                            Name = "CASIO EFB-302JD-1ADR",
+                            Price = 10882000m,
+                            Stock = 5,
+                            originPrice = 10000000m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            DateCreated = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "",
+                            Details = "",
+                            Name = "CITIZEN NB1021-57E",
+                            Price = 14700000m,
+                            Stock = 5,
+                            originPrice = 14000000m
+                        });
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
+                {
+                    b.HasOne("clockECommerce.Data.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

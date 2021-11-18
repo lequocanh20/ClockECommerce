@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace clockECommerce.AdminApp.Services
+namespace clockECommerce.ApiIntegration
 {
     public class BaseApiClient
     {
@@ -130,6 +130,27 @@ namespace clockECommerce.AdminApp.Services
                 return myDeserializedObjList;
             }
             return JsonConvert.DeserializeObject<TResponse>(body);
+        }
+
+        public async Task<bool> Delete(string url)
+        {
+            // Lấy ra token
+            var sessions = _httpContextAccessor
+               .HttpContext
+               .Session
+               .GetString(SystemConstants.AppSettings.Token);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.DeleteAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

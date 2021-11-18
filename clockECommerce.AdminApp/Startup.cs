@@ -1,4 +1,5 @@
 using clockECommerce.AdminApp.Services;
+using clockECommerce.ApiIntegration;
 using clockECommerce.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -47,6 +48,8 @@ namespace clockECommerce.AdminApp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -80,6 +83,7 @@ namespace clockECommerce.AdminApp
 
             app.UseAuthorization();
             app.UseSession();
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

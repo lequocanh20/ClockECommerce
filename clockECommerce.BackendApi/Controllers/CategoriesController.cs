@@ -1,4 +1,5 @@
 ﻿using clockECommerce.Application.Catalog.Categories;
+using clockECommerce.ViewModels.Catalog.Categories;
 using clockECommerce.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,52 +40,52 @@ namespace clockECommerce.BackendApi.Controllers
             return Ok(category);
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    var categoryId = await _categoryService.Create(request);
+            var categoryId = await _categoryService.Create(request);
 
-        //    if (categoryId == 0)
-        //        return BadRequest();
+            if (categoryId == 0)
+                return BadRequest();
 
-        //    var category = await _categoryService.GetById(categoryId);
+            var category = await _categoryService.GetById(categoryId);
 
-        //    return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
-        //}
+            return CreatedAtAction(nameof(GetById), new { id = categoryId }, category);
+        }
 
-        //// HttpPut: update toàn phần
-        //[HttpPut("updateCategory")]
-        //[Authorize]
-        //public async Task<IActionResult> Update([FromBody] CategoryUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var affectedResult = await _categoryService.Update(request);
-        //    if (affectedResult == 0)
-        //    {
-        //        return BadRequest();
-        //    }
+        // HttpPut: update toàn phần
+        [HttpPut("updateCategory")]
+        [Authorize]
+        public async Task<IActionResult> Update([FromBody] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var affectedResult = await _categoryService.Update(request);
+            if (affectedResult == 0)
+            {
+                return BadRequest();
+            }
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
-        //[HttpDelete("{id}")]
-        //[Authorize]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var affectedResult = await _categoryService.Delete(id);
-        //    if (affectedResult == 0)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var affectedResult = await _categoryService.Delete(id);
+            if (affectedResult == 0)
+            {
+                return BadRequest();
+            }
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
     }
 }

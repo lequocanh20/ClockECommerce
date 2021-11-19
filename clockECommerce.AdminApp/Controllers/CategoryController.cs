@@ -1,4 +1,5 @@
 ﻿using clockECommerce.ApiIntegration;
+using clockECommerce.ViewModels.Catalog.Categories;
 using clockECommerce.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -31,90 +32,90 @@ namespace clockECommerce.AdminApp.Controllers
             return View(data);
         }
 
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(request);
-        //    }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
 
-        //    var result = await _categoryApiClient.CreateCategory(request);
-        //    if (result)
-        //    {
-        //        TempData["CreateCategorySuccessful"] = "Thêm mới danh mục thành công";
-        //        return RedirectToAction("Index");
-        //    }
+            var result = await _categoryApiClient.CreateCategory(request);
+            if (result)
+            {
+                TempData["CreateCategorySuccessful"] = "Thêm mới danh mục thành công";
+                return RedirectToAction("Index");
+            }
 
-        //    ModelState.AddModelError("", "Thêm danh mục thất bại");
-        //    return View(request);
-        //}
+            ModelState.AddModelError("", "Thêm danh mục thất bại");
+            return View(request);
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    var categories = await _categoryApiClient.GetById(id);
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var categories = await _categoryApiClient.GetById(id);
 
-        //    var editVm = new CategoryUpdateRequest()
-        //    {
-        //        Id = id,
-        //        Name = categories.Name
-        //    };
+            var editVm = new CategoryUpdateRequest()
+            {
+                Id = id,
+                Name = categories.Name
+            };
 
-        //    return View(editVm);
-        //}
+            return View(editVm);
+        }
 
-        //[HttpPost]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> Edit([FromForm] CategoryUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(request);
-        //    }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] CategoryUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
 
-        //    var result = await _categoryApiClient.UpdateCategory(request);
-        //    if (result)
-        //    {
-        //        TempData["UpdateCategorySuccessful"] = "Cập nhật danh mục thành công";
-        //        return RedirectToAction("Index");
-        //    }
+            var result = await _categoryApiClient.UpdateCategory(request);
+            if (result)
+            {
+                TempData["UpdateCategorySuccessful"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
 
-        //    ModelState.AddModelError("", "Cập nhật danh mục thất bại");
-        //    return View(request);
-        //}
+            ModelState.AddModelError("", "Cập nhật danh mục thất bại");
+            return View(request);
+        }
 
-        //[HttpGet]
-        //public IActionResult Delete(int id)
-        //{
-        //    return View(new CategoryDeleteRequest()
-        //    {
-        //        Id = id
-        //    });
-        //}
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new CategoryDeleteRequest()
+            {
+                Id = id
+            });
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(CategoryDeleteRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
+        [HttpPost]
+        public async Task<IActionResult> Delete(CategoryDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
 
-        //    var result = await _categoryApiClient.DeleteCategory(request.Id);
-        //    if (result)
-        //    {
-        //        TempData["DeleteCategorySuccessful"] = "Xóa danh mục thành công";
-        //        return RedirectToAction("Index");
-        //    }
+            var result = await _categoryApiClient.DeleteCategory(request.Id);
+            if (result)
+            {
+                TempData["DeleteCategorySuccessful"] = "Xóa danh mục thành công";
+                return RedirectToAction("Index");
+            }
 
-        //    ModelState.AddModelError("", "Xóa danh mục không thành công");
-        //    return View(request);
-        //}
+            ModelState.AddModelError("", "Xóa danh mục không thành công");
+            return View(request);
+        }
     }
 }

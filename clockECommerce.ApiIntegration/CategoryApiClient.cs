@@ -1,4 +1,5 @@
-﻿using clockECommerce.ViewModels.Catalog.Categories;
+﻿using clockECommerce.Ultilities.Constants;
+using clockECommerce.ViewModels.Catalog.Categories;
 using clockECommerce.ViewModels.Catalog.Products;
 using clockECommerce.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
@@ -29,44 +30,44 @@ namespace clockECommerce.ApiIntegration
             _httpClientFactory = httpClientFactory;
         }
 
-        //public async Task<bool> CreateCategory(CategoryCreateRequest request)
-        //{
-        //    var sessions = _httpContextAccessor
-        //        .HttpContext
-        //        .Session
-        //        .GetString(SystemConstants.AppSettings.Token);
+        public async Task<bool> CreateCategory(CategoryCreateRequest request)
+        {
+            var sessions = _httpContextAccessor
+                .HttpContext
+                .Session
+                .GetString(SystemConstants.AppSettings.Token);
 
-        //    var client = _httpClientFactory.CreateClient();
-        //    client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-        //    var json = JsonConvert.SerializeObject(request);
-        //    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-        //    var response = await client.PostAsync($"/api/categories/", httpContent);
-        //    return response.IsSuccessStatusCode;
-        //}
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"/api/categories/", httpContent);
+            return response.IsSuccessStatusCode;
+        }
 
-        //public async Task<bool> UpdateCategory(CategoryUpdateRequest request)
-        //{
-        //    var sessions = _httpContextAccessor
-        //        .HttpContext
-        //        .Session
-        //        .GetString(SystemConstants.AppSettings.Token);
+        public async Task<bool> UpdateCategory(CategoryUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor
+                .HttpContext
+                .Session
+                .GetString(SystemConstants.AppSettings.Token);
 
-        //    var client = _httpClientFactory.CreateClient();
-        //    client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-        //    var json = JsonConvert.SerializeObject(request);
-        //    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-        //    var response = await client.PutAsync($"/api/categories/updateCategory", httpContent);
-        //    return response.IsSuccessStatusCode;
-        //}
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PutAsync($"/api/categories/updateCategory", httpContent);
+            return response.IsSuccessStatusCode;
+        }
 
-        //public async Task<bool> DeleteCategory(int id)
-        //{
-        //    return await Delete($"/api/categories/" + id);
-        //}
+        public async Task<bool> DeleteCategory(int id)
+        {
+            return await Delete($"/api/categories/" + id);
+        }
 
         public async Task<PagedResult<CategoryViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {

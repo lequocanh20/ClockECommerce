@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using clockECommerce.Data.EF;
+using clockECommerce.Data.Entities;
+using clockECommerce.Ultilities.Exceptions;
 using clockECommerce.ViewModels.Catalog.Categories;
 using clockECommerce.ViewModels.Catalog.Products;
 using clockECommerce.ViewModels.Common;
@@ -18,37 +20,37 @@ namespace clockECommerce.Application.Catalog.Categories
             _context = context;
         }
 
-        //public async Task<int> Create(CategoryCreateRequest request)
-        //{
-        //    var category = new Category()
-        //    {
-        //        Name = request.Name
-        //    };
+        public async Task<int> Create(CategoryCreateRequest request)
+        {
+            var category = new Category()
+            {
+                Name = request.Name
+            };
 
-        //    _context.Categories.Add(category);
-        //    await _context.SaveChangesAsync();
-        //    return category.Id;
-        //}
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return category.Id;
+        }
 
-        //public async Task<int> Update(CategoryUpdateRequest request)
-        //{
-        //    var category = await _context.Categories.FindAsync(request.Id);
-        //    if (category == null) throw new EShopException($"Không thể tìm danh mục có ID: {request.Id} ");
+        public async Task<int> Update(CategoryUpdateRequest request)
+        {
+            var category = await _context.Categories.FindAsync(request.Id);
+            if (category == null) throw new clockECommerceException($"Không thể tìm danh mục có ID: {request.Id} ");
 
-        //    category.Name = request.Name;
+            category.Name = request.Name;
 
-        //    return await _context.SaveChangesAsync();
-        //}
+            return await _context.SaveChangesAsync();
+        }
 
-        //public async Task<int> Delete(int categoryId)
-        //{
-        //    var category = await _context.Categories.FindAsync(categoryId);
-        //    if (category == null) throw new EShopException($"Không thể tìm danh mục có ID: {categoryId} ");
+        public async Task<int> Delete(int categoryId)
+        {
+            var category = await _context.Categories.FindAsync(categoryId);
+            if (category == null) throw new clockECommerceException($"Không thể tìm danh mục có ID: {categoryId} ");
 
-        //    _context.Categories.Remove(category);
+            _context.Categories.Remove(category);
 
-        //    return await _context.SaveChangesAsync();
-        //}
+            return await _context.SaveChangesAsync();
+        }
 
         public async Task<PagedResult<CategoryViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {

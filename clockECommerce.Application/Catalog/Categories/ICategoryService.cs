@@ -10,11 +10,11 @@ namespace clockECommerce.Application.Catalog.Categories
 {
     public interface ICategoryService
     {
-        //Task<int> Create(CategoryCreateRequest request);
+        Task<int> Create(CategoryCreateRequest request);
 
-        //Task<int> Update(CategoryUpdateRequest request);
+        Task<int> Update(CategoryUpdateRequest request);
 
-        //Task<int> Delete(int categoryId);
+        Task<int> Delete(int categoryId);
 
         Task<PagedResult<CategoryViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 

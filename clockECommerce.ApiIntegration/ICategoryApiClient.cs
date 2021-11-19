@@ -14,10 +14,10 @@ namespace clockECommerce.ApiIntegration
 
         Task<CategoryViewModel> GetById(int id);
 
-        //Task<bool> CreateCategory(CategoryCreateRequest request);
+        Task<bool> CreateCategory(CategoryCreateRequest request);
 
-        //Task<bool> UpdateCategory(CategoryUpdateRequest request);
+        Task<bool> UpdateCategory(CategoryUpdateRequest request);
 
-        //Task<bool> DeleteCategory(int id);
+        Task<bool> DeleteCategory(int id);
     }
 }

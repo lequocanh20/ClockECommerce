@@ -39,9 +39,9 @@ namespace clockECommerce.Data.Extensions
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
-                FirstName = "Anh",
-                LastName = "Le Quoc",
-                Dob = new DateTime(2000, 07, 22)
+                PhoneNumber = "0774642207",
+                Address = "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh",
+                Name = "Quoc Anh",
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>

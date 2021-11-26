@@ -267,14 +267,14 @@ namespace clockECommerce.Application.Catalog.Products
         }
 
         // giảm số lượng sản phẩm trong kho khi khách hàng tăng sl sp
-        //public async Task<bool> DecreaseStock(int productId, int quantity)
-        //{
-        //    var product = await _context.Products.FindAsync(productId);
+        public async Task<bool> DecreaseStock(int productId, int quantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
 
-        //    if (product == null) throw new clockECommerceException($"Cannot find product with id: {productId} ");
-        //    product.Stock -= quantity;
-        //    return await _context.SaveChangesAsync() > 0;
-        //}
+            if (product == null) throw new clockECommerceException($"Cannot find product with id: {productId} ");
+            product.Stock -= quantity;
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
         {

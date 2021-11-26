@@ -156,15 +156,14 @@ namespace clockECommerce.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -180,7 +179,7 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "6c79820c-a6f1-46c0-810b-e75d655e402f",
+                            ConcurrencyStamp = "5a0af7af-f371-4787-ba94-202c1fc3c103",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -196,11 +195,11 @@ namespace clockECommerce.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Dob")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -208,21 +207,16 @@ namespace clockECommerce.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
@@ -257,16 +251,16 @@ namespace clockECommerce.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1bc0eb50-0dfd-4894-a151-974028e542c3",
-                            Dob = new DateTime(2000, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Address = "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh",
+                            ConcurrencyStamp = "e9c1e096-d13b-4e89-9ae1-f681686e5ddf",
                             Email = "lequocanh.qa@gmail.com",
                             EmailConfirmed = true,
-                            FirstName = "Anh",
-                            LastName = "Le Quoc",
                             LockoutEnabled = false,
+                            Name = "Quoc Anh",
                             NormalizedEmail = "lequocanh.qa@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPqU78OnPQvSzHgZ2iHdFHk4rwaYIJTAqBYsCF33wlZvftez96q1ZDxeuaTNCoOVvQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENl0GKx/b1TNK+vBV6fMwtMQtAqaX0qrhocO+LyOnzBVkW6aBgKWMJLmuKC5bhoSwg==",
+                            PhoneNumber = "0774642207",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -308,6 +302,97 @@ namespace clockECommerce.Data.Migrations
                             Id = 3,
                             Name = "Citizen"
                         });
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Describe")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("Promotion")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CouponId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CouponId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
@@ -405,6 +490,40 @@ namespace clockECommerce.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("clockECommerce.Data.Entities.Order", b =>
+                {
+                    b.HasOne("clockECommerce.Data.Entities.Coupon", "Coupon")
+                        .WithMany("Orders")
+                        .HasForeignKey("CouponId");
+
+                    b.HasOne("clockECommerce.Data.Entities.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Coupon");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("clockECommerce.Data.Entities.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("clockECommerce.Data.Entities.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
                 {
                     b.HasOne("clockECommerce.Data.Entities.Category", "Category")
@@ -416,9 +535,29 @@ namespace clockECommerce.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("clockECommerce.Data.Entities.AppUser", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("clockECommerce.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Coupon", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

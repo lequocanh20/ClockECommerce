@@ -23,6 +23,7 @@ namespace clockECommerce.Data.Entities
         // product image path
         public string ProductImage { get; set; }
 
+        public List<OrderDetail> OrderDetails { get; set; }
         public Category Category { get; set; }
     }
 }

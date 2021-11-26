@@ -35,32 +35,78 @@ namespace clockECommerce.Application.System.Users
 
         public async Task<ApiResult<string>> Authencate(LoginRequest request)
         {
+            // Tìm xem tên user có tồn tại hay không
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+            if (user == null) return new ApiErrorResult<string>(new string("Tài khoản không tồn tại"));
+
+            // Trả về một SignInResult, tham số cuối là IsPersistent kiểu bool
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
             if (!result.Succeeded)
             {
-                return new ApiErrorResult<string>("Đăng nhập không đúng");
+                return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
             }
+
             var roles = await _userManager.GetRolesAsync(user);
-            var claims = new[]
+            if (roles.Count == 0)
             {
+                var claims = new[]
+                {
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.FirstName),
-                new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, request.UserName)
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                new Claim(ClaimTypes.GivenName,user.Name),
+                new Claim(ClaimTypes.Role, "customer"),
+                new Claim(ClaimTypes.Name, request.UserName),
+                new Claim(ClaimTypes.StreetAddress, user?.Address),
+                new Claim(ClaimTypes.MobilePhone, user?.PhoneNumber),
+                };
+                // Lưu ý khi claim mà các thông tin bị null sẽ báo lỗi
 
-            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-                _config["Tokens:Issuer"],
-                claims,
-                expires: DateTime.Now.AddHours(3),
-                signingCredentials: creds);
+                // Sau khi có được claim thì ta cần mã hóa nó
+                // Tokens key và issuer nằm ở appsettings.json và truy cập được thông qua DI 1 Iconfig
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
 
-            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                // 1 SecurityToken ( cần cài jwt )
+                var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+                    _config["Tokens:Issuer"],
+                    claims,
+                    expires: DateTime.Now.AddMonths(1),
+                    signingCredentials: creds);
+
+                return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+            }
+            else
+            {
+                var claims = new[]
+                {
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.GivenName,user.Name),
+                new Claim(ClaimTypes.Role, "admin"),
+                new Claim(ClaimTypes.Name, request.UserName),
+                new Claim(ClaimTypes.StreetAddress, user?.Address),
+                new Claim(ClaimTypes.MobilePhone, user?.PhoneNumber),
+                };
+
+                // Lưu ý khi claim mà các thông tin bị null sẽ báo lỗi
+
+                // Sau khi có được claim thì ta cần mã hóa nó
+                // Tokens key và issuer nằm ở appsettings.json và truy cập được thông qua DI 1 Iconfig
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                // 1 SecurityToken ( cần cài jwt )
+                var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+                    _config["Tokens:Issuer"],
+                    claims,
+                    expires: DateTime.Now.AddMonths(1),
+                    signingCredentials: creds);
+
+                return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+            }
         }
 
         public async Task<ApiResult<bool>> Delete(Guid id)
@@ -87,15 +133,19 @@ namespace clockECommerce.Application.System.Users
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserViewModel()
             {
+                UserName = user.UserName,
+                Address = user.Address,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                FirstName = user.FirstName,
-                Dob = user.Dob,
+                Name = user.Name,
                 Id = user.Id,
-                LastName = user.LastName,
-                UserName = user.UserName,
-                Roles = roles
             };
+
+            foreach (var role in roles)
+            {
+                userVm.Roles = role.ToString();
+            }
+
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
 
@@ -118,9 +168,8 @@ namespace clockECommerce.Application.System.Users
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
                     UserName = x.UserName,
-                    FirstName = x.FirstName,
+                    Name = x.Name,
                     Id = x.Id,
-                    LastName = x.LastName
                 }).ToListAsync();
 
             //4. Select and projection
@@ -148,13 +197,13 @@ namespace clockECommerce.Application.System.Users
 
             user = new AppUser()
             {
-                Dob = request.Dob,
                 Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
+                Address = request.Address,
+                Name = request.Name,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
             };
+
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
@@ -199,10 +248,8 @@ namespace clockECommerce.Application.System.Users
                 return new ApiErrorResult<bool>("Emai đã tồn tại");
             }
             var user = await _userManager.FindByIdAsync(id.ToString());
-            user.Dob = request.Dob;
             user.Email = request.Email;
-            user.FirstName = request.FirstName;
-            user.LastName = request.LastName;
+            user.Name = request.Name;
             user.PhoneNumber = request.PhoneNumber;
 
             var result = await _userManager.UpdateAsync(user);
@@ -211,6 +258,22 @@ namespace clockECommerce.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            var query = from c in _userManager.Users
+                        select new { c };
+
+            return await query.Select(x => new UserViewModel()
+            {
+                Id = x.c.Id,
+                Name = x.c.Name,
+                UserName = x.c.UserName,
+                PhoneNumber = x.c.PhoneNumber,
+                Email = x.c.Email,
+                Address = x.c.Address
+            }).ToListAsync();
         }
     }
 }

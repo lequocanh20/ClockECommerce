@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace clockECommerce.Data.Enum
+namespace clockECommerce.Data.Enums
 {
     public enum Status
     {

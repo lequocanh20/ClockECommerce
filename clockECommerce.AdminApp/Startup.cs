@@ -50,6 +50,8 @@ namespace clockECommerce.AdminApp
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<ICouponApiClient, CouponApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -71,7 +73,7 @@ namespace clockECommerce.AdminApp
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //The default HSTS value is 30 days.You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

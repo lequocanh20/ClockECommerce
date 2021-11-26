@@ -8,17 +8,13 @@ namespace clockECommerce.ViewModels.System.Users
     public class RegisterRequest
     {
         [Display(Name = "Tên")]
-        public string FirstName { get; set; }
+        public string Name { get; set; }
 
-        [Display(Name = "Họ")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
-
-        [Display(Name = "Hòm thư")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Địa chỉ")]
+        public string Address { get; set; }
 
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
@@ -33,5 +29,6 @@ namespace clockECommerce.ViewModels.System.Users
         [Display(Name = "Xác nhận mật khẩu")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
     }
 }

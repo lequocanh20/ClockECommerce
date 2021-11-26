@@ -13,12 +13,10 @@ namespace clockECommerce.Application.System.Roles
     public class RoleService : IRoleService
     {
         private readonly RoleManager<AppRole> _roleManager;
-
         public RoleService(RoleManager<AppRole> roleManager)
         {
             _roleManager = roleManager;
         }
-
         public async Task<List<RoleViewModel>> GetAll()
         {
             var roles = await _roleManager.Roles
@@ -26,7 +24,8 @@ namespace clockECommerce.Application.System.Roles
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Description = x.Description
+                    Description = x.Description,
+
                 }).ToListAsync();
 
             return roles;

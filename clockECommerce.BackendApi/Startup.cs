@@ -1,4 +1,6 @@
 using clockECommerce.Application.Catalog.Categories;
+using clockECommerce.Application.Catalog.Coupons;
+using clockECommerce.Application.Catalog.Orders;
 using clockECommerce.Application.Catalog.Products;
 using clockECommerce.Application.Common;
 using clockECommerce.Application.System.Roles;
@@ -53,6 +55,8 @@ namespace clockECommerce.BackendApi
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICouponService, CouponService>();
+            services.AddTransient<IOrderService, OrderService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSwaggerGen(c =>
@@ -139,6 +143,7 @@ namespace clockECommerce.BackendApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Clock ECommere V1");
+                //c.RoutePrefix = string.Empty;
             });
 
             app.UseEndpoints(endpoints =>

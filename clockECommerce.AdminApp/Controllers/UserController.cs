@@ -84,12 +84,12 @@ namespace clockECommerce.AdminApp.Controllers
                 var user = result.ResultObj;
                 var updateRequest = new UserUpdateRequest()
                 {
-                    Dob = user.Dob,
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
+                    Id = id,
+                    Name = user.Name,
+                    UserName = user.UserName,
                     PhoneNumber = user.PhoneNumber,
-                    Id = id
+                    Email = user.Email,
+                    Address = user.Address
                 };
                 return View(updateRequest);
             }
@@ -178,9 +178,11 @@ namespace clockECommerce.AdminApp.Controllers
         {
             var userObj = await _userApiClient.GetById(id);
             var roleObj = await _roleApiClient.GetAll();
+            
             var roleAssignRequest = new RoleAssignRequest();
             foreach (var role in roleObj.ResultObj)
             {
+                var xn = userObj.ResultObj.Roles.Contains(role.Name);
                 roleAssignRequest.Roles.Add(new SelectItem()
                 {
                     Id = role.Id.ToString(),

@@ -1,0 +1,57 @@
+﻿@model clockECommerce.ViewModels.Sales.OrderViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h2>Order Information</h2>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>Id : </td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Name : </td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Address : </td>
+                <td>@Model.Address</td>
+            </tr>
+            <tr>
+                <td>Email : </td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td>PhoneNumber : </td>
+                <td>@Model.PhoneNumber</td>
+            </tr>
+            <tr>
+                <td>OrderDate : </td>
+                <td>@Model.OrderDate</td>
+            </tr>
+            <tr>
+                <td>Price : </td>
+                <td>@Model.Price</td>
+            </tr>
+            <tr>
+                <td>ShipName : </td>
+                <td>@Model.ShipName</td>
+            </tr>
+            <tr>
+                <td>ShipAddress : </td>
+                <td>@Model.ShipAddress</td>
+            </tr>
+            <tr>
+                <td>ShipPhoneNumber : </td>
+                <td>@Model.ShipPhoneNumber</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

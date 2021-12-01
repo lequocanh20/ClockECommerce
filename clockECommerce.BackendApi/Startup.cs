@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Wkhtmltopdf.NetCore;
 
 namespace clockECommerce.BackendApi
 {
@@ -115,6 +116,7 @@ namespace clockECommerce.BackendApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
+            services.AddWkhtmltopdf("wkhtmltopdf");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -34,9 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,12 @@
     <ProjectReference Include="..\clockECommerce.Data\clockECommerce.Data.csproj" />
     <ProjectReference Include="..\clockECommerce.Ultilities\clockECommerce.Ultilities.csproj" />
     <ProjectReference Include="..\clockECommerce.ViewModels\clockECommerce.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wkhtmltopdf\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -25,7 +25,7 @@ namespace clockECommerce.BackendApi.Controllers
             var coupons = await _couponService.GetAll();
             return Ok(coupons);
         }
-        
+
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {

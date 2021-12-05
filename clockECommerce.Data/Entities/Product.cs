@@ -9,9 +9,8 @@ namespace clockECommerce.Data.Entities
         public int Id { get; set; }
         public string Name { set; get; }
         public int CategoryId { get; set; }
-
-        public decimal originPrice { get; set; }
         public decimal Price { get; set; }
+        public decimal originPrice { get; set; }
         public int Stock { get; set; }
         public DateTime DateCreated { get; set; }
         public string Description { set; get; }
@@ -23,7 +22,8 @@ namespace clockECommerce.Data.Entities
         // product image path
         public string ProductImage { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
         public Category Category { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }

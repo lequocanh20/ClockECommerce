@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -65,7 +64,7 @@ namespace clockECommerce.ApiIntegration
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
             }
-            requestContent.Add(new StringContent(request.originPrice.ToString()), "originPrice");
+
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");
@@ -111,7 +110,7 @@ namespace clockECommerce.ApiIntegration
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
             }
-            requestContent.Add(new StringContent(request.originPrice.ToString()), "originPrice");
+
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");
@@ -155,33 +154,33 @@ namespace clockECommerce.ApiIntegration
             return data;
         }
 
-        //public async Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take)
-        //{
-        //    var data = await GetListAsync<ProductViewModel>($"/api/products/featured/{take}");
-        //    return data;
-        //}
+        public async Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductViewModel>($"/api/products/featured/{take}");
+            return data;
+        }
 
-        //public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
-        //{
-        //    var data = await GetListAsync<ProductViewModel>($"/api/products/latest/{take}");
-        //    return data;
-        //}
+        public async Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take)
+        {
+            var data = await GetListAsync<ProductViewModel>($"/api/products/latest/{take}");
+            return data;
+        }
 
-        //public async Task<string> AddReview(ProductDetailViewModel model)
-        //{
-        //    var sessions = _httpContextAccessor
-        //                    .HttpContext
-        //                    .Session
-        //                    .GetString(SystemConstants.AppSettings.Token);
+        public async Task<string> AddReview(ProductDetailViewModel model)
+        {
+            var sessions = _httpContextAccessor
+                            .HttpContext
+                            .Session
+                            .GetString(SystemConstants.AppSettings.Token);
 
-        //    var client = _httpClientFactory.CreateClient();
-        //    client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-        //    var json = JsonConvert.SerializeObject(model);
-        //    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-        //    var response = await client.PostAsync($"/api/products/addReview", httpContent);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var json = JsonConvert.SerializeObject(model);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"/api/products/addReview", httpContent);
 
-        //    return await response.Content.ReadAsStringAsync();
-        //}
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

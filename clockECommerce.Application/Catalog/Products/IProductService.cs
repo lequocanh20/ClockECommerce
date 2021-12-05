@@ -27,12 +27,12 @@ namespace clockECommerce.Application.Catalog.Products
 
         Task<PagedResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
 
-        //Task<List<ProductViewModel>> GetFeaturedProducts(int take);
+        Task<List<ProductViewModel>> GetFeaturedProducts(int take);
 
-        //Task<List<ProductViewModel>> GetLatestProducts(int take);
+        Task<List<ProductViewModel>> GetLatestProducts(int take);
 
         Task<bool> DecreaseStock(int productId, int quantity);
 
-        //Task<int> AddReview(ProductDetailViewModel model);
+        Task<int> AddReview(ProductDetailViewModel model);
     }
 }

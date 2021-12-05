@@ -1,10 +1,6 @@
 ﻿using clockECommerce.Application.System.Roles;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace clockECommerce.BackendApi.Controllers
@@ -15,7 +11,6 @@ namespace clockECommerce.BackendApi.Controllers
     public class RolesController : ControllerBase
     {
         private readonly IRoleService _roleService;
-
         public RolesController(IRoleService roleService)
         {
             _roleService = roleService;

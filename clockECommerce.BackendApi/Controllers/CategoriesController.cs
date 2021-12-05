@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace clockECommerce.BackendApi.Controllers
+namespace eShopSolutionBackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

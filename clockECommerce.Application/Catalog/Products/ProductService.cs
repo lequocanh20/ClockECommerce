@@ -129,22 +129,22 @@ namespace clockECommerce.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        //public async Task<int> AddReview(ProductDetailViewModel model)
-        //{
-        //    Guid userGuid = new Guid(model.UserCommentId.ToString());
-        //    Review review = new Review()
-        //    {
-        //        ProductId = model.ProductId,
-        //        Comments = model.Review,
-        //        Rating = model.Rating,
-        //        PublishedDate = DateTime.Now,
-        //        UserId = userGuid
-        //    };
+        public async Task<int> AddReview(ProductDetailViewModel model)
+        {
+            Guid userGuid = new Guid(model.UserCommentId.ToString());
+            Review review = new Review()
+            {
+                ProductId = model.ProductId,
+                Comments = model.Review,
+                Rating = model.Rating,
+                PublishedDate = DateTime.Now,
+                UserId = userGuid
+            };
 
-        //    _context.Reviews.Add(review);
-        //    await _context.SaveChangesAsync();
-        //    return model.ProductId;
-        //}
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+            return model.ProductId;
+        }
 
         public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
@@ -227,26 +227,26 @@ namespace clockECommerce.Application.Catalog.Products
             var product = await _context.Products.FindAsync(productId);
 
             // Lấy danh sách review
-            //var reviews = _context.Reviews.Where(x => x.ProductId.Equals(productId)).ToList();
+            var reviews = _context.Reviews.Where(x => x.ProductId.Equals(productId)).ToList();
 
             // Lấy danh sách star rating
-            //var ratings = _context.Reviews.Where(d => d.ProductId.Equals(productId)).ToList();
+            var ratings = _context.Reviews.Where(d => d.ProductId.Equals(productId)).ToList();
 
-            //var listOfReviews = new List<ReviewViewModel>();
-            //foreach (var review in reviews)
-            //{
-            //    var user = await _userManager.FindByIdAsync(review.UserId.ToString());
-            //    listOfReviews.Add(new ReviewViewModel()
-            //    {
-            //        Id = review.Id,
-            //        UserId = review.UserId,
-            //        UserName = user.Name,
-            //        ProductId = review.ProductId,
-            //        Rating = review.Rating,
-            //        Comments = review.Comments,
-            //        PublishedDate = review.PublishedDate
-            //    });
-            //}
+            var listOfReviews = new List<ReviewViewModel>();
+            foreach (var review in reviews)
+            {
+                var user = await _userManager.FindByIdAsync(review.UserId.ToString());
+                listOfReviews.Add(new ReviewViewModel()
+                {
+                    Id = review.Id,
+                    UserId = review.UserId,
+                    UserName = user.Name,
+                    ProductId = review.ProductId,
+                    Rating = review.Rating,
+                    Comments = review.Comments,
+                    PublishedDate = review.PublishedDate
+                });
+            }
 
             var productViewModel = new ProductViewModel()
             {
@@ -317,54 +317,54 @@ namespace clockECommerce.Application.Catalog.Products
             return pagedResult;
         }
 
-        //public async Task<List<ProductViewModel>> GetFeaturedProducts(int take)
-        //{
-        //    //1. Select join
-        //    var query = from p in _context.Products
-        //                join c in _context.Categories on p.CategoryId equals c.Id
-        //                select new { p };
+        public async Task<List<ProductViewModel>> GetFeaturedProducts(int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join c in _context.Categories on p.CategoryId equals c.Id
+                        select new { p };
 
-        //    var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
-        //        .Select(x => new ProductViewModel()
-        //        {
-        //            Id = x.p.Id,
-        //            Name = x.p.Name,
-        //            CategoryId = x.p.CategoryId,
-        //            DateCreated = x.p.DateCreated,
-        //            Description = x.p.Description,
-        //            Details = x.p.Details,
-        //            Price = x.p.Price,
-        //            Stock = x.p.Stock,
-        //            ThumbnailImage = x.p.Thumbnail,
-        //            ProductImage = x.p.ProductImage,
-        //        }).ToListAsync();
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    CategoryId = x.p.CategoryId,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.p.Description,
+                    Details = x.p.Details,
+                    Price = x.p.Price,
+                    Stock = x.p.Stock,
+                    ThumbnailImage = x.p.Thumbnail,
+                    ProductImage = x.p.ProductImage,
+                }).ToListAsync();
 
-        //    return data;
-        //}
+            return data;
+        }
 
-        //public async Task<List<ProductViewModel>> GetLatestProducts(int take)
-        //{
-        //    //1. Select join
-        //    var query = from p in _context.Products
-        //                join c in _context.Categories on p.CategoryId equals c.Id
-        //                select new { p };
+        public async Task<List<ProductViewModel>> GetLatestProducts(int take)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        join c in _context.Categories on p.CategoryId equals c.Id
+                        select new { p };
 
-        //    var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
-        //        .Select(x => new ProductViewModel()
-        //        {
-        //            Id = x.p.Id,
-        //            Name = x.p.Name,
-        //            CategoryId = x.p.CategoryId,
-        //            DateCreated = x.p.DateCreated,
-        //            Description = x.p.Description,
-        //            Details = x.p.Details,
-        //            Price = x.p.Price,
-        //            Stock = x.p.Stock,
-        //            ThumbnailImage = x.p.Thumbnail,
-        //            ProductImage = x.p.ProductImage
-        //        }).ToListAsync();
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    CategoryId = x.p.CategoryId,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.p.Description,
+                    Details = x.p.Details,
+                    Price = x.p.Price,
+                    Stock = x.p.Stock,
+                    ThumbnailImage = x.p.Thumbnail,
+                    ProductImage = x.p.ProductImage
+                }).ToListAsync();
 
-        //    return data;
-        //}
+            return data;
+        }
     }
 }

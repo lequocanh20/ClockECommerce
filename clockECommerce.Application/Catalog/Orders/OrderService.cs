@@ -46,7 +46,7 @@ namespace clockECommerce.Application.Catalog.Orders
             if (request.PaymentMethod == PaymentMethod.CreditCard)
             {
                 payment_method = "Credit Card";
-                status = (Data.Enums.OrderStatus)3;
+                status = (Data.Enums.OrderStatus)2;
             }
 
             var order = new Order()

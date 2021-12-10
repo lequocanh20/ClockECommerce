@@ -260,8 +260,8 @@ namespace clockECommerce.Application.Catalog.Products
                 Price = product.Price,
                 Stock = product.Stock,
                 ThumbnailImage = product.Thumbnail != null ? product.Thumbnail : "no-image.jpg",
-                ProductImage = product.ProductImage != null ? product.ProductImage : "no-image.jpg"
-                //Reviews = listOfReviews
+                ProductImage = product.ProductImage != null ? product.ProductImage : "no-image.jpg",
+                Reviews = listOfReviews
             };
             return productViewModel;
         }

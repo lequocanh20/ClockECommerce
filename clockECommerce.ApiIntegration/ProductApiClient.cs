@@ -64,7 +64,7 @@ namespace clockECommerce.ApiIntegration
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
             }
-
+            requestContent.Add(new StringContent(request.originPrice.ToString()), "originPrice");
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");
@@ -110,7 +110,7 @@ namespace clockECommerce.ApiIntegration
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
             }
-
+            requestContent.Add(new StringContent(request.originPrice.ToString()), "originPrice");
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");

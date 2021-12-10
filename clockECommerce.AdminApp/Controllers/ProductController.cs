@@ -100,6 +100,7 @@ namespace clockECommerce.AdminApp.Controllers
                 Name = product.Name,
                 CategoryId = product.CategoryId,
                 Categories = categories,
+                originPrice = product.originPrice,
                 Price = product.Price,
                 Stock = product.Stock,
                 Description = product.Description,

@@ -24,5 +24,7 @@ namespace clockECommerce.ApiIntegration
         Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
 
         Task<string> AddReview(ProductDetailViewModel model);
+
+        Task<List<ProductViewModel>> GetAll();
     }
 }

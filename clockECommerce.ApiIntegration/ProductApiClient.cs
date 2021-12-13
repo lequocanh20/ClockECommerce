@@ -182,5 +182,10 @@ namespace clockECommerce.ApiIntegration
 
             return await response.Content.ReadAsStringAsync();
         }
+
+        public async Task<List<ProductViewModel>> GetAll()
+        {
+            return await GetListAsync<ProductViewModel>("/api/products");
+        }
     }
 }

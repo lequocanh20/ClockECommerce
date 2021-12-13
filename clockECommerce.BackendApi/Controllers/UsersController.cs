@@ -176,5 +176,14 @@ namespace clockECommerce.BackendApi.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPatch("disableAccount/{id}")]
+        public async Task<IActionResult> BrowserReview([FromBody] Guid id)
+        {
+            var result = await _userService.DisableAccount(id);
+            if (result.IsSuccessed)
+                return Ok();
+            return BadRequest("Không vô hiệu hóa được tài khoản");
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace clockECommerce.ApiIntegration
         Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel model);
 
         Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel model);
+
+        Task<bool> DisableAccount(Guid id);
     }
 }

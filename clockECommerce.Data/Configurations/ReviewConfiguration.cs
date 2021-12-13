@@ -1,4 +1,5 @@
 ﻿using clockECommerce.Data.Entities;
+using clockECommerce.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,6 +18,8 @@ namespace clockECommerce.Data.Configurations
             builder.Property(x => x.Comments).IsRequired().HasMaxLength(500).HasColumnType("nvarchar");
 
             builder.Property(x => x.Rating).IsRequired();
+
+            builder.Property(x => x.Status).IsRequired().HasDefaultValue((Status)0);
 
             builder.HasOne(x => x.Product).WithMany(x => x.Reviews).HasForeignKey(x => x.ProductId);
 

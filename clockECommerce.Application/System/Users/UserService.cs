@@ -47,11 +47,18 @@ namespace clockECommerce.Application.System.Users
 
             // Trả về một SignInResult, tham số cuối là IsPersistent kiểu bool
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
-            if (!result.Succeeded)
+            if (!result.Succeeded && user.LockoutEnabled == false)
             {
                 return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
             }
-
+            else if (result.Succeeded && user.LockoutEnabled == true)
+            {
+                return new ApiErrorResult<string>(new string("Tài khoản của bạn đã bị khóa"));
+            }
+            else if (!result.Succeeded)
+            {
+                return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
+            }
             var roles = await _userManager.GetRolesAsync(user);
             if (roles.Count == 0)
             {
@@ -297,6 +304,7 @@ namespace clockECommerce.Application.System.Users
                 .Take(request.PageSize)
                 .Select(x => new UserViewModel()
                 {
+                    LockEnable = x.LockoutEnabled,
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
                     UserName = x.UserName,
@@ -387,6 +395,27 @@ namespace clockECommerce.Application.System.Users
             }
 
             return new ApiErrorResult<bool>("Đổi mật khẩu không thành công");
+        }
+
+        public async Task<ApiResult<bool>> DisableAccount(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            var status = user.LockoutEnabled;
+
+            switch (status)
+            {
+                case false:
+                    user.LockoutEnabled = true;
+                    break;
+
+                case true:
+                    user.LockoutEnabled = false;
+                    break;
+            }
+
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
+
         }
     }
 }

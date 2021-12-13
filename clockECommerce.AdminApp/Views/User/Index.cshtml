@@ -2,13 +2,18 @@
 @model PagedResult<clockECommerce.ViewModels.System.Users.UserViewModel>
 
 @{ ViewData["Title"] = "Danh sách khách hàng";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 @section Scripts{
     <script>
         setTimeout(function () {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
+    </script>
+    <script src="/js/disableaccount.js"></script>
+    <script>
+        var userController = new UserController();
+        userController.initialize();
     </script>
 }
 <div class="container-fluid">
@@ -58,6 +63,9 @@
                             <th>
                                 Email
                             </th>
+                            <th>
+                                Trạng thái tài khoản
+                            </th>
                             <th class="text-center">
                                 Thao tác
                             </th>
@@ -69,21 +77,42 @@
 
                             if (item.UserName != "admin")
                             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td class="text-center">
-                    <button class="btn btn-primary">@Html.ActionLink("Xem chi tiết", "Details", new { id = item.Id })</button>
-                </td>
-            </tr>}
-                        }
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @if(item.LockEnable == false)
+                                        {
+                                            string status = "Hoạt động";
+                                            @Html.DisplayFor(modelItem => status)
+                                        }
+                                        else 
+                                        { 
+                                            string status = "Đã khóa";
+                                            @Html.DisplayFor(modelItem => status)
+                                        }                                   
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.LockEnable == true)
+                                        {
+                                            <button class="btn btn-primary btn-user" data-url="@Url.Action("Details","User", new { id = item.Id })">Xem chi tiết</button>
+                                            <button class="btn btn-success btn-user-status" data-id="@item.Id">Mở khóa</button> }
+                                        else
+                                        {
+                                            <button class="btn btn-primary btn-user" data-url="@Url.Action("Details","User", new { id = item.Id })">Xem chi tiết</button>
+                                            <button class="btn btn-danger btn-user-status" data-id="@item.Id">Khóa tài khoản</button>                    
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                         }
                     </tbody>
                 </table>
             </div>

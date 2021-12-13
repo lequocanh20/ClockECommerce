@@ -1,6 +1,6 @@
 ﻿var OrderController = function () {
     this.initialize = function () {
-        registerEvent();
+        registerEvent();        
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

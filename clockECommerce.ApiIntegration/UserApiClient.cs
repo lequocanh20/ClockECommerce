@@ -1,4 +1,5 @@
-﻿using clockECommerce.ViewModels.Common;
+﻿using clockECommerce.Ultilities.Constants;
+using clockECommerce.ViewModels.Common;
 using clockECommerce.ViewModels.System.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -309,6 +310,24 @@ namespace clockECommerce.ApiIntegration
 
             }
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+        }
+
+        public async Task<bool> DisableAccount(Guid id)
+        {
+            var sessions = _httpContextAccessor
+                             .HttpContext
+                             .Session
+                             .GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var json = JsonConvert.SerializeObject(id);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PatchAsync($"/api/users/disableAccount/{id}", httpContent);
+
+            if (response.IsSuccessStatusCode)
+                return true;
+            return false;
         }
     }
 }

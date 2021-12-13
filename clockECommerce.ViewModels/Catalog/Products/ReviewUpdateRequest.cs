@@ -5,7 +5,7 @@ using System.Text;
 
 namespace clockECommerce.ViewModels.Catalog.Products
 {
-    public class ReviewViewModel
+    public class ReviewUpdateRequest
     {
         public int Id { get; set; }
         public Guid UserId { set; get; }

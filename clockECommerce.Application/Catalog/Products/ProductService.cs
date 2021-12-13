@@ -1,6 +1,7 @@
 ﻿using clockECommerce.Application.Common;
 using clockECommerce.Data.EF;
 using clockECommerce.Data.Entities;
+using clockECommerce.Data.Enums;
 using clockECommerce.Ultilities.Exceptions;
 using clockECommerce.ViewModels.Catalog.Products;
 using clockECommerce.ViewModels.Common;
@@ -226,11 +227,12 @@ namespace clockECommerce.Application.Catalog.Products
 
             var product = await _context.Products.FindAsync(productId);
 
+
             // Lấy danh sách review
-            var reviews = _context.Reviews.Where(x => x.ProductId.Equals(productId)).ToList();
+            var reviews = _context.Reviews.Where(x => x.ProductId.Equals(productId) && (Status)x.Status == (Status)1).ToList();
 
             // Lấy danh sách star rating
-            var ratings = _context.Reviews.Where(d => d.ProductId.Equals(productId)).ToList();
+            //var ratings = _context.Reviews.Where(d => d.ProductId.Equals(productId)).ToList();
 
             var listOfReviews = new List<ReviewViewModel>();
             foreach (var review in reviews)
@@ -365,6 +367,18 @@ namespace clockECommerce.Application.Catalog.Products
                 }).ToListAsync();
 
             return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetAll()
+        {
+            var query = from c in _context.Products
+                        select new { c };
+
+            return await query.Select(x => new ProductViewModel()
+            {
+                Id = x.c.Id,
+                Name = x.c.Name,
+            }).ToListAsync();
         }
     }
 }

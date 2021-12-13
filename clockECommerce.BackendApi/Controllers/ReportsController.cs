@@ -1,4 +1,5 @@
-﻿using clockECommerce.ViewModels.Sales;
+﻿using clockECommerce.Data.EF;
+using clockECommerce.ViewModels.Sales;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,14 @@ namespace clockECommerce.BackendApi.Controllers
     public class ReportsController : ControllerBase
     {
         private readonly IGeneratePdf _generatePdf;
-        public ReportsController(IGeneratePdf generatePdf)
+        private readonly clockECommerceDbContext _context;
+        public ReportsController(IGeneratePdf generatePdf,
+            clockECommerceDbContext context)
         {
             _generatePdf = generatePdf;
+            _context = context;
         }
+
         [HttpGet]
         [Route("Get")]
         public async Task<IActionResult> GetEmployeeInfo()
@@ -100,7 +105,7 @@ namespace clockECommerce.BackendApi.Controllers
                     worksheet.Cell(currentRow, 10).Value = order.ShipPhoneNumber;
                 }
 
-                worksheet.Columns(1, 8).AdjustToContents();
+                worksheet.Columns(1, 10).AdjustToContents();
                 using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);

@@ -2,7 +2,15 @@
 @model PagedResult<clockECommerce.ViewModels.Catalog.Categories.CategoryViewModel>
 
 @{ ViewData["Title"] = "Danh sách danh mục";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Scripts{
+<script>
+    $('.btn-cate').click(function () {
+        window.location.href = $(this).data('url');
+    });
+</script>
+}
 
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách danh mục</h1>
@@ -36,37 +44,40 @@
         <div class="card-body">
             @if (TempData["CreateCategorySuccessful"] != null)
             {
-<script>
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Thêm danh mục thành công',
-        showConfirmButton: false,
-        timer: 1500
-    })
-</script> }
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Thêm danh mục thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+ }
             else if (TempData["UpdateCategorySuccessful"] != null)
             {
-<script>
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Cập nhật danh mục thành công',
-        showConfirmButton: false,
-        timer: 1500
-    })
-</script> }
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Cập nhật danh mục thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+ }
             else if (TempData["DeleteCategorySuccessful"] != null)
             {
-<script>
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Xóa danh mục thành công',
-        showConfirmButton: false,
-        timer: 1500
-    })
-</script>            }
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Xóa danh mục thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+   }
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -85,18 +96,19 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
-            <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td class="text-center">
-                    <button class="btn btn-success">@Html.ActionLink("Cập nhật", "Edit", new { id = item.Id })</button>
-                    <button class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.Id })</button>
-                </td>
-            </tr>}
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-success btn-cate" data-url="@Url.Action("Edit","Category",new { id = item.Id })">Cập nhật</button>
+                                    <button class="btn btn-danger btn-cate" data-url="@Url.Action("Delete","Category",new { id = item.Id })">Xóa</button>
+                                </td>
+                            </tr>
+}
                     </tbody>
                 </table>
             </div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using clockECommerce.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace clockECommerce.Data.Entities
         public int Rating { get; set; }
         public string Comments { get; set; }
         public DateTime PublishedDate { get; set; }
+        public Status Status { get; set; }
         public Product Product { get; set; }
         public AppUser AppUser { get; set; }
     }

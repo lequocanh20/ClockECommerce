@@ -12,6 +12,11 @@
             $('#msgAlert').fadeOut('slow');
         }, 2000);
     </script>
+    <script>
+        $('.btn-product').click(function () {
+            window.location.href = $(this).data('url');
+        });
+    </script>
 }
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách sản phẩm</h1>
@@ -135,9 +140,9 @@
                                 @Html.DisplayFor(modelItem => item.Stock)
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-primary">@Html.ActionLink("Xem chi tiết", "Details", new { id = item.Id })</button>
-                                <button class="btn btn-success">@Html.ActionLink("Cập nhật", "Edit", new { id = item.Id })</button>
-                                <button class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.Id })</button>
+                                <button class="btn btn-primary btn-product" data-url="@Url.Action("Details", "Product", new { id = item.Id })">Xem chi tiết</button>
+                                <button class="btn btn-success btn-product" data-url="@Url.Action("Edit", "Product", new { id = item.Id })">Cập nhật</button>
+                                <button class="btn btn-danger btn-product" data-url="@Url.Action("Delete", "Product", new { id = item.Id })">Xóa</button>
                             </td>
                         </tr>
                         }

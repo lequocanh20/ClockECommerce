@@ -191,5 +191,19 @@ namespace clockECommerce.AdminApp.Controllers
             }
             return roleAssignRequest;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableAccount(Guid id)
+        {
+            var result = await _userApiClient.DisableAccount(id);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật trạng thái bình luận thành công";
+                return RedirectToAction("Index");
+            }
+
+            TempData["resultFail"] = "Cập nhật trạng thái bình luận không thành công";
+            return RedirectToAction("Index", "Review");
+        }
     }
 }

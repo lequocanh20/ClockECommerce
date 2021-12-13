@@ -32,6 +32,9 @@ namespace clockECommerce.Application.System.Users
         Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailViewModel request);
 
         Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel request);
+
         Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel request);
+
+        Task<ApiResult<bool>> DisableAccount(Guid id);
     }
 }

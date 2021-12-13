@@ -124,5 +124,12 @@ namespace clockECommerce.BackendApi.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = await _productService.GetAll();
+            return Ok(products);
+        }
     }
 }

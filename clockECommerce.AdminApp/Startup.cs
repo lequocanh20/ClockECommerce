@@ -51,6 +51,7 @@ namespace clockECommerce.AdminApp
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<ICouponApiClient, CouponApiClient>();
             services.AddTransient<IOrderApiClient, OrderApiClient>();
+            services.AddTransient<IReviewApiClient, ReviewApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 

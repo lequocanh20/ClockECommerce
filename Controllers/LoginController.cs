@@ -95,6 +95,7 @@ namespace clockECommerce.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             if (!ModelState.IsValid)
@@ -104,7 +105,22 @@ namespace clockECommerce.WebApp.Controllers
 
             if (!result.IsSuccessed)
             {
-                ModelState.AddModelError("", result.Message);
+                if (result.Message.Contains("Email"))
+                {
+                    ModelState.AddModelError("Email", result.Message);
+                }
+                else if (result.Message.Contains("Số điện thoại"))
+                {
+                    ModelState.AddModelError("PhoneNumber", result.Message);
+                }
+                else if (result.Message.Contains("Tên tài khoản"))
+                {
+                    ModelState.AddModelError("UserName", result.Message);
+                }
+                else
+                {
+                    ModelState.AddModelError("", result.Message);
+                }                    
                 return View(registerRequest);
             }
 

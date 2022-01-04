@@ -1,0 +1,38 @@
+﻿@model clockECommerce.ViewModels.Catalog.Reports.ReportCreateRequest
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    ViewData["Title"] = "Thống kê doanh thu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="mt-4">Thống kê doanh thu</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Thống kê doanh thu</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <form asp-action="Report" asp-controller="Report" method="get">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name="month" asp-items="@ViewBag.Months" asp-for="Month" class="form-control">
+                                    <option>Chọn tháng</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="year" asp-items="@ViewBag.Years" asp-for="Year" class="form-control">
+                                    <option>Chọn năm</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-info">Lọc</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

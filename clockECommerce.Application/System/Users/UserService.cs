@@ -58,7 +58,11 @@ namespace clockECommerce.Application.System.Users
             else if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
-            }
+            }    
+            else if(result.Succeeded && user.EmailConfirmed == false)
+            {
+                return new ApiErrorResult<string>(new string("Tài khoản chưa xác thực. Vui lòng xác thực tài khoản trước khi đăng nhập."));
+            }    
             var roles = await _userManager.GetRolesAsync(user);
             if (roles.Count == 0)
             {
@@ -152,6 +156,7 @@ namespace clockECommerce.Application.System.Users
                 Name = request.Name,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
+                LockoutEnabled = false
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);

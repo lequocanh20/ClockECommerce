@@ -1,11 +1,7 @@
 ﻿using clockECommerce.Application.Catalog.Products;
 using clockECommerce.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace clockECommerce.BackendApi.Controllers
@@ -102,31 +98,38 @@ namespace clockECommerce.BackendApi.Controllers
             return Ok();
         }
 
-        //[HttpGet("featured/{take}")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> GetFeaturedProducts(int take)
-        //{
-        //    var product = await _productService.GetFeaturedProducts(take);
-        //    return Ok(product);
-        //}
+        [HttpGet("featured/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(int take)
+        {
+            var product = await _productService.GetFeaturedProducts(take);
+            return Ok(product);
+        }
 
-        //[HttpGet("latest/{take}")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> GetLatestProducts(int take)
-        //{
-        //    var products = await _productService.GetLatestProducts(take);
-        //    return Ok(products);
-        //}
+        [HttpGet("latest/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take)
+        {
+            var products = await _productService.GetLatestProducts(take);
+            return Ok(products);
+        }
 
-        //[HttpPost("addReview")]
-        //public async Task<IActionResult> AddReview([FromBody] ProductDetailViewModel model)
-        //{
-        //    var result = await _productService.AddReview(model);
-        //    if (result == 0)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    return Ok(result);
-        //}
+        [HttpPost("addReview")]
+        public async Task<IActionResult> AddReview([FromBody] ProductDetailViewModel model)
+        {
+            var result = await _productService.AddReview(model);
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = await _productService.GetAll();
+            return Ok(products);
+        }
     }
 }

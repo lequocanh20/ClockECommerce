@@ -1,0 +1,85 @@
+﻿@model clockECommerce.ViewModels.Catalog.Products.ReviewUpdateRequest
+@using clockECommerce.ViewModels.Ultilities.Enums;
+@{
+
+    ViewData["Title"] = "Cập nhật bình luận";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .validation-summary-valid span {
+        display: none;
+    }
+</style>
+
+<div class="container-fluid">
+    <h1 class="mt-4">Cập nhật bình luận</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Cập nhật bình luận</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Review">Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" name="Id" value="@Model.Id" />
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label">Mã user</label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label">Tên user</label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductId" class="control-label">Mã sản phẩm</label>
+                        <input asp-for="ProductId" class="form-control" />
+                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Comments" class="control-label">Nội dung</label>
+                        <textarea id="txt_details" asp-for="Comments" rows="5" class="form-control"></textarea>
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Rating" class="control-label">Đánh giá</label>
+                        <input asp-for="Rating" class="form-control" />
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PublishedDate" class="control-label">Ngày đăng</label>
+                        <input asp-for="PublishedDate" type="date" class="form-control" />
+                        <span asp-validation-for="PublishedDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Trạng thái</label>
+                        <select class="form-control" asp-for="Status">
+                            @if (Model.Status == 0)
+                            {
+                                <option value="@Status.InActive">Vô hiệu hóa</option>
+                                <option value="@Status.Active">Kích hoạt</option>
+                            }
+                            else
+                            {
+                                <option value="@Status.Active">Kích hoạt</option>
+                                <option value="@Status.InActive">Vô hiệu hóa</option>
+                            }
+
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,9 @@
-using clockECommerce.Application.Catalog.Categories;
+﻿using clockECommerce.Application.Catalog.Categories;
 using clockECommerce.Application.Catalog.Coupons;
 using clockECommerce.Application.Catalog.Orders;
 using clockECommerce.Application.Catalog.Products;
+using clockECommerce.Application.Catalog.Reports;
+using clockECommerce.Application.Catalog.Reviews;
 using clockECommerce.Application.Common;
 using clockECommerce.Application.System.Roles;
 using clockECommerce.Application.System.Users;
@@ -44,7 +46,18 @@ namespace clockECommerce.BackendApi
             services.AddDbContext<clockECommerceDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
-            services.AddIdentity<AppUser, AppRole>()
+
+            // Cần thêm service này khi viết API đăng ký đăng nhập
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddEntityFrameworkStores<clockECommerceDbContext>()
                 .AddDefaultTokenProviders();
             //Declare DI
@@ -58,6 +71,8 @@ namespace clockECommerce.BackendApi
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<IReportService, ReportService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
             services.AddSwaggerGen(c =>
@@ -117,6 +132,7 @@ namespace clockECommerce.BackendApi
                 };
             });
             services.AddWkhtmltopdf("wkhtmltopdf");
+            services.AddMvc().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

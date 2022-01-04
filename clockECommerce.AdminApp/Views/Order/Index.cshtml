@@ -18,6 +18,11 @@
         var orderController = new OrderController();
         orderController.initialize();
     </script>
+    <script>
+        $('.btn-order').click(function () {
+            window.location.href = $(this).data('url');
+        });
+    </script>
 }
 
 <div class="container-fluid">
@@ -124,21 +129,21 @@
 
                                     @if (item.Status == (OrderStatus)1)
                                     {
-                                        <button class="btn btn-success btn-update-status" data-id="@item.Id">@Html.ActionLink("Duyệt đơn", "UpdateOrderStatus", new { orderId = item.Id })</button>
+                                        <button class="btn btn-success btn-update-status" data-id="@item.Id">Duyệt đơn</button>
                                         <button class="btn btn-danger btn-cancel" data-id="@item.Id">Hủy đơn</button>
                                     }
                                     else if (item.Status == (OrderStatus)2)
                                     {
-                                        <button class="btn btn-success btn-update-status" data-id="@item.Id">@Html.ActionLink("Giao hàng", "UpdateOrderStatus", new { orderId = item.Id })</button>
+                                        <button class="btn btn-success btn-update-status" data-id="@item.Id">Giao hàng</button>
                                         <button class="btn btn-danger btn-cancel" data-id="@item.Id">Hủy đơn</button>
                                     }
                                     else if (item.Status == (OrderStatus)3)
                                     {
-                                        <button class="btn btn btn-success btn-update-status" data-id="@item.Id">@Html.ActionLink("Xác nhận đã giao hàng", "UpdateOrderStatus", new { orderId = item.Id })</button>
+                                        <button class="btn btn btn-success btn-update-status" data-id="@item.Id">Xác nhận đã giao hàng</button>
                                     }
                                 </td>
-                                <td class="text-center">
-                                    <button class="btn btn-primary">@Html.ActionLink("Xem chi tiết", "Detail", new { orderId = item.Id, name = item.Name })</button>
+                                <td class="text-center">                                    
+                                    <button class="btn btn-primary btn-order" data-url="@Url.Action("Detail","Order", new { orderId = item.Id, name = item.Name })">Xem chi tiết</button>
                                 </td>
                             </tr>
                         }

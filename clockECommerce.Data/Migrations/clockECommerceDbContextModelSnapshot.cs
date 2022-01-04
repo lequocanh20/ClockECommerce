@@ -179,7 +179,7 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "5a0af7af-f371-4787-ba94-202c1fc3c103",
+                            ConcurrencyStamp = "0151a386-7107-4e8a-b7bf-84968597dff6",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -252,14 +252,14 @@ namespace clockECommerce.Data.Migrations
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
                             Address = "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh",
-                            ConcurrencyStamp = "e9c1e096-d13b-4e89-9ae1-f681686e5ddf",
+                            ConcurrencyStamp = "13a10ddd-7f7a-4a07-b6e7-2cb077d7a700",
                             Email = "lequocanh.qa@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Quoc Anh",
                             NormalizedEmail = "lequocanh.qa@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAENl0GKx/b1TNK+vBV6fMwtMQtAqaX0qrhocO+LyOnzBVkW6aBgKWMJLmuKC5bhoSwg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGEkBQfvgtqpDhyx1VTNGGEikXDLAOdK3+ntVc/+S/MIODLfd79hp0eoL4IkWai3CQ==",
                             PhoneNumber = "0774642207",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -442,7 +442,6 @@ namespace clockECommerce.Data.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("originPrice")
-                        .HasMaxLength(100000000)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -490,6 +489,46 @@ namespace clockECommerce.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("clockECommerce.Data.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("clockECommerce.Data.Entities.Order", b =>
                 {
                     b.HasOne("clockECommerce.Data.Entities.Coupon", "Coupon")
@@ -535,9 +574,30 @@ namespace clockECommerce.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("clockECommerce.Data.Entities.Review", b =>
+                {
+                    b.HasOne("clockECommerce.Data.Entities.Product", "Product")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("clockECommerce.Data.Entities.AppUser", "AppUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("clockECommerce.Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("clockECommerce.Data.Entities.Category", b =>
@@ -558,6 +618,8 @@ namespace clockECommerce.Data.Migrations
             modelBuilder.Entity("clockECommerce.Data.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

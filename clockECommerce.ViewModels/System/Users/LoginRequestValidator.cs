@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace clockECommerce.ViewModels.System.Users
 {
@@ -9,9 +7,10 @@ namespace clockECommerce.ViewModels.System.Users
     {
         public LoginRequestValidator()
         {
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("User name is required");
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")
-                .MinimumLength(6).WithMessage("Password is at least 6 characters");
+            // Đây là một phương thức của abstract validator
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("Tên tài khoản không được để trống");
+
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Mật khẩu không được để trống");
         }
     }
 }

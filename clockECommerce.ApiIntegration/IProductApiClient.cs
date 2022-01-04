@@ -1,8 +1,6 @@
 ﻿using clockECommerce.ViewModels.Catalog.Products;
 using clockECommerce.ViewModels.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace clockECommerce.ApiIntegration
@@ -21,10 +19,12 @@ namespace clockECommerce.ApiIntegration
 
         Task<ProductViewModel> GetById(int id);
 
-        //Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take);
+        Task<List<ProductViewModel>> GetFeaturedProducts(string languageId, int take);
 
-        //Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
+        Task<List<ProductViewModel>> GetLatestProducts(string languageId, int take);
 
-        //Task<string> AddReview(ProductDetailViewModel model);
+        Task<string> AddReview(ProductDetailViewModel model);
+
+        Task<List<ProductViewModel>> GetAll();
     }
 }

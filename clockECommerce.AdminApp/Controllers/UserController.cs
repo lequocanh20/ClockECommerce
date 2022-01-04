@@ -1,5 +1,4 @@
-﻿using clockECommerce.AdminApp.Services;
-using clockECommerce.ApiIntegration;
+﻿using clockECommerce.ApiIntegration;
 using clockECommerce.ViewModels.Common;
 using clockECommerce.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
@@ -69,8 +68,8 @@ namespace clockECommerce.AdminApp.Controllers
             {
                 TempData["result"] = "Thêm mới người dùng thành công";
                 return RedirectToAction("Index");
-            }
 
+            }
             ModelState.AddModelError("", result.Message);
             return View(request);
         }
@@ -118,6 +117,7 @@ namespace clockECommerce.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
+            Response.Cookies.Delete("userToken");
             return RedirectToAction("Index", "Login");
         }
 
@@ -161,12 +161,12 @@ namespace clockECommerce.AdminApp.Controllers
                 return View();
 
             var result = await _userApiClient.RoleAssign(request.Id, request);
-
             if (result.IsSuccessed)
             {
                 TempData["result"] = "Cập nhật quyền thành công";
                 return RedirectToAction("Index");
             }
+
 
             ModelState.AddModelError("", result.Message);
             var roleAssignRequest = await GetRoleAssignRequest(request.Id);
@@ -174,15 +174,14 @@ namespace clockECommerce.AdminApp.Controllers
             return View(roleAssignRequest);
         }
 
+        // Dùng cho Http Get trang gán quyền Hiện ra tẩt cả role + role user đã chọn
         private async Task<RoleAssignRequest> GetRoleAssignRequest(Guid id)
         {
             var userObj = await _userApiClient.GetById(id);
             var roleObj = await _roleApiClient.GetAll();
-            
             var roleAssignRequest = new RoleAssignRequest();
             foreach (var role in roleObj.ResultObj)
             {
-                var xn = userObj.ResultObj.Roles.Contains(role.Name);
                 roleAssignRequest.Roles.Add(new SelectItem()
                 {
                     Id = role.Id.ToString(),
@@ -191,6 +190,20 @@ namespace clockECommerce.AdminApp.Controllers
                 });
             }
             return roleAssignRequest;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisableAccount(Guid id)
+        {
+            var result = await _userApiClient.DisableAccount(id);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật trạng thái bình luận thành công";
+                return RedirectToAction("Index");
+            }
+
+            TempData["resultFail"] = "Cập nhật trạng thái bình luận không thành công";
+            return RedirectToAction("Index", "Review");
         }
     }
 }

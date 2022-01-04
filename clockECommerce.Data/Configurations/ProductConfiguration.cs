@@ -1,9 +1,6 @@
 ﻿using clockECommerce.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace clockECommerce.Data.Configurations
 {
@@ -16,8 +13,6 @@ namespace clockECommerce.Data.Configurations
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).UseIdentityColumn();
-
-            builder.Property(x => x.originPrice).IsRequired().HasMaxLength(100000000);
 
             builder.Property(x => x.Price).IsRequired().HasMaxLength(100000000);
 

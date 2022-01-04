@@ -25,5 +25,7 @@ namespace clockECommerce.ViewModels.System.Users
         public string Address { get; set; }
 
         public string Roles { get; set; }
+
+        public bool LockEnable { get; set; }
     }
 }

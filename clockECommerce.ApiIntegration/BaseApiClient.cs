@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -15,6 +14,8 @@ namespace clockECommerce.ApiIntegration
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+
+        // Provides access to the current HttpContext, if one is available.
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         protected BaseApiClient(IHttpClientFactory httpClientFactory,
@@ -34,16 +35,20 @@ namespace clockECommerce.ApiIntegration
                 .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
+
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+
+            //Represents authentication information
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
             var response = await client.GetAsync(url);
+
             var body = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
-                    typeof(TResponse));
-
-                return myDeserializedObjList;
+                TResponse myDeserializeObjList = (TResponse)JsonConvert.DeserializeObject(body, typeof(TResponse));
+                return myDeserializeObjList;
             }
             return JsonConvert.DeserializeObject<TResponse>(body);
         }
@@ -54,6 +59,7 @@ namespace clockECommerce.ApiIntegration
                .HttpContext
                .Session
                .GetString(SystemConstants.AppSettings.Token);
+
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
@@ -67,71 +73,8 @@ namespace clockECommerce.ApiIntegration
             }
             throw new Exception(body);
         }
-        protected async Task<TResponse> PostAsync<TResponse>(string url, HttpContent httpContent)
-        {
-            var sessions = _httpContextAccessor
-                .HttpContext
-                .Session
-                .GetString(SystemConstants.AppSettings.Token);
 
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.PostAsync(url, httpContent);
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
-                    typeof(TResponse));
-
-                return myDeserializedObjList;
-            }
-            return JsonConvert.DeserializeObject<TResponse>(body);
-        }
-        protected async Task<TResponse> PutAsync<TResponse>(string url, HttpContent httpContent)
-        {
-            var sessions = _httpContextAccessor
-                .HttpContext
-                .Session
-                .GetString(SystemConstants.AppSettings.Token);
-
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.PutAsync(url, httpContent);
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
-                    typeof(TResponse));
-
-                return myDeserializedObjList;
-            }
-            return JsonConvert.DeserializeObject<TResponse>(body);
-        }
-
-        protected async Task<TResponse> DeleteAsync<TResponse>(string url)
-        {
-            var sessions = _httpContextAccessor
-                .HttpContext
-                .Session
-                .GetString(SystemConstants.AppSettings.Token);
-
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-            var response = await client.DeleteAsync(url);
-            var body = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
-                    typeof(TResponse));
-
-                return myDeserializedObjList;
-            }
-            return JsonConvert.DeserializeObject<TResponse>(body);
-        }
-
+        // Cần đăng nhập mới dùng được nên bỏ tham số bool requiredLogin = false
         public async Task<bool> Delete(string url)
         {
             // Lấy ra token
@@ -145,6 +88,27 @@ namespace clockECommerce.ApiIntegration
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var response = await client.DeleteAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> Export(string url)
+        {
+            // Lấy ra token
+            var sessions = _httpContextAccessor
+               .HttpContext
+               .Session
+               .GetString(SystemConstants.AppSettings.Token);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {

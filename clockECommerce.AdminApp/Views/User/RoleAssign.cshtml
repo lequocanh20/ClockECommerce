@@ -4,6 +4,7 @@
     ViewData["Title"] = "Gán quyền";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="container-fluid">
     <h1 class="mt-4">Gán quyền</h1>
     <ol class="breadcrumb mb-4">
@@ -27,7 +28,7 @@
                             <input type="checkbox" asp-for="Roles[i].Selected" />
                             <input type="hidden" asp-for="Roles[i].Id" />
                             <input type="hidden" asp-for="Roles[i].Name" />
-                        </label>
+                        </label>                       
                     </div>
                 }
                 <div class="form-group">

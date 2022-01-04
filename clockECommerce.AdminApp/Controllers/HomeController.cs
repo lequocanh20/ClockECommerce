@@ -23,6 +23,7 @@ namespace clockECommerce.AdminApp.Controllers
         public IActionResult Index()
         {
             var user = User.Identity.Name;
+            var expireTime = HttpContext.Items["ExpiresUTC"];
             return View();
         }
 

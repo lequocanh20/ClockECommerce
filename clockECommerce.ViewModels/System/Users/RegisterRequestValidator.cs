@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace clockECommerce.ViewModels.System.Users
 {
@@ -32,12 +29,12 @@ namespace clockECommerce.ViewModels.System.Users
 
             // Khi ta viết => {} thì sẽ tự động hiểu request là của Register và context là của CustomContext
             RuleFor(x => x).Custom((request, context) =>
-            {
-                if (request.Password != request.ConfirmPassword)
-                {
-                    context.AddFailure("Mật khẩu xác nhận không khớp với mật khẩu");
-                }
-            });
+              {
+                  if (request.Password != request.ConfirmPassword)
+                  {
+                      context.AddFailure("Mật khẩu xác nhận không khớp với mật khẩu");
+                  }
+              });
         }
     }
 }

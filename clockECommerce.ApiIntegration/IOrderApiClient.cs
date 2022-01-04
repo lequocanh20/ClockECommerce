@@ -1,9 +1,5 @@
 ﻿using clockECommerce.ViewModels.Common;
 using clockECommerce.ViewModels.Sales;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace clockECommerce.ApiIntegration

@@ -1,0 +1,173 @@
+﻿@using clockECommerce.ViewModels.Catalog.Products;
+@using clockECommerce.ViewModels.Common;
+@using clockECommerce.ViewModels.Ultilities.Enums;
+@model PagedResult<ReviewViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách bình luận";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+<script src="/js/reviews.js"></script>
+<script>
+    var reviewController = new ReviewController();
+    reviewController.initialize();
+</script>
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Danh sách bình luận</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách bình luận</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-5 col-xs-12">
+                    <form asp-action="Index" asp-controller="Review" method="get">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @*name: là tên tham số*@
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <button type="button" onclick="window.location.href='/Review/Index'" class="btn btn-secondary">Đặt lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["BrowserReviewSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Duyệt bình luận thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["UpdateReviewSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Cập nhật bình luận thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["DeleteReviewSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Xóa bình luận thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                ID
+                            </th>
+                            <th class="text-center">
+                                Tên user
+                            </th>
+                            <th class="text-center">
+                                Mã sản phẩm
+                            </th>
+                            <th class="text-center">
+                                Bình luận
+                            </th>
+                            <th class="text-center">
+                                Rating
+                            </th>
+                            <th class="text-center">
+                                Ngày đăng
+                            </th>
+                            <th class="text-center">
+                                Trạng thái
+                            </th>
+                            <th class="text-center">
+                                Thao tác
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.ProductId)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Comments)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Rating)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.PublishedDate)
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Status == Status.Active)
+                                    {
+                                        string status = "Kích hoạt";
+                                        @Html.DisplayFor(modelItem => status)
+                                    }
+                                    else
+                                    {
+                                        string status = "Vô hiệu hóa";
+                                        @Html.DisplayFor(modelItem => status)
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Status == Status.InActive)
+                                    {
+                                        <button class="btn btn-info btn-browser-status" data-id="@item.Id">Duyệt</button>
+                                        <button class="btn btn-success btn-review" data-url="@Url.Action("Edit","Review", new { reviewId = item.Id })">Cập nhật</button>
+                                        <button class="btn btn-danger btn-review" data-url="@Url.Action("Delete","Review",new { reviewId = item.Id })">Xóa</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-success btn-review" data-url="@Url.Action("Edit","Review",new { reviewId = item.Id })">Cập nhật</button>
+                                        <button class="btn btn-danger btn-review" data-url="@Url.Action("Delete","Review",new { reviewId = item.Id })">Xóa</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @*truyền Model vào hàm InvokeAsync của class PagerViewComponent để phân trang*@
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>

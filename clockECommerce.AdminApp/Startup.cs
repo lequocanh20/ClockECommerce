@@ -1,4 +1,3 @@
-using clockECommerce.AdminApp.Services;
 using clockECommerce.ApiIntegration;
 using clockECommerce.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
@@ -52,6 +51,8 @@ namespace clockECommerce.AdminApp
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<ICouponApiClient, CouponApiClient>();
             services.AddTransient<IOrderApiClient, OrderApiClient>();
+            services.AddTransient<IReviewApiClient, ReviewApiClient>();
+            services.AddTransient<IReportApiClient, ReportApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 

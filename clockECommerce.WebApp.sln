@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clockECommerce.AdminApp", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clockECommerce.BackendApi", "clockECommerce.BackendApi\clockECommerce.BackendApi.csproj", "{7BF69A23-08DC-47B9-A056-2AF43112AF3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clockECommerce.ApiIntegration", "clockECommerce.ApiIntegration\clockECommerce.ApiIntegration.csproj", "{D5DF99C3-A32C-4874-9EFD-9734A185775D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clockECommerce.ApiIntegration", "clockECommerce.ApiIntegration\clockECommerce.ApiIntegration.csproj", "{D5DF99C3-A32C-4874-9EFD-9734A185775D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{2125E2CC-A9B2-49DE-B607-A14D4D250A74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{D5DF99C3-A32C-4874-9EFD-9734A185775D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5DF99C3-A32C-4874-9EFD-9734A185775D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5DF99C3-A32C-4874-9EFD-9734A185775D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2125E2CC-A9B2-49DE-B607-A14D4D250A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2125E2CC-A9B2-49DE-B607-A14D4D250A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2125E2CC-A9B2-49DE-B607-A14D4D250A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2125E2CC-A9B2-49DE-B607-A14D4D250A74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{02813E4E-8A25-4E1E-B796-69A6F67D7204} = {2B302212-4EE2-46E9-8FCA-2D46CEF3D3E0}
 		{7BF69A23-08DC-47B9-A056-2AF43112AF3E} = {2B302212-4EE2-46E9-8FCA-2D46CEF3D3E0}
 		{D5DF99C3-A32C-4874-9EFD-9734A185775D} = {2B302212-4EE2-46E9-8FCA-2D46CEF3D3E0}
+		{2125E2CC-A9B2-49DE-B607-A14D4D250A74} = {2B302212-4EE2-46E9-8FCA-2D46CEF3D3E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E50887C-7D08-4420-9CBF-AFDA9BF5FD0D}

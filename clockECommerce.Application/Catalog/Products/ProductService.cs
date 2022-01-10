@@ -48,6 +48,7 @@ namespace clockECommerce.Application.Catalog.Products
                 Stock = request.Stock,
                 Description = request.Description,
                 Details = request.Details,
+                DateCreated = DateTime.Now
             };
 
             //Save thumbnail image

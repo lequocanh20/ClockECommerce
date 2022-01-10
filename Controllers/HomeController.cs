@@ -76,18 +76,19 @@ namespace clockECommerce.WebApp.Controllers
                 FeaturedProducts = await _productApiClient.GetFeaturedProducts(culture, SystemConstants.ProductSettings.NumberOfFeturedProducts),
                 LatestProducts = await _productApiClient.GetLatestProducts(culture, SystemConstants.ProductSettings.NumberOfLatestProducts),
                 //Categories = await _categoryApiClient.GetAll()
-            };
-
+            }; 
 
             foreach (var item in viewModel.LatestProducts)
             {
-                var category = await _categoryApiClient.GetById(item.Id);
+                var product = await _productApiClient.GetById(item.Id);
+                var category = await _categoryApiClient.GetById(product.CategoryId);
                 item.Category = category;
             }
 
             foreach (var item in viewModel.FeaturedProducts)
             {
-                var category = await _categoryApiClient.GetById(item.Id);
+                var product = await _productApiClient.GetById(item.Id);
+                var category = await _categoryApiClient.GetById(product.CategoryId);
                 item.Category = category;
             }
 

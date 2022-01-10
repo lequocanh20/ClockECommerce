@@ -117,6 +117,10 @@ namespace clockECommerce.WebApp.Controllers
                 {
                     ModelState.AddModelError("UserName", result.Message);
                 }
+                else if (result.Message.Equals("Mật khẩu xác nhận không khớp với mật khẩu"))
+                {
+                    ModelState.AddModelError("ConfirmPassword", result.Message);
+                }    
                 else
                 {
                     ModelState.AddModelError("", result.Message);

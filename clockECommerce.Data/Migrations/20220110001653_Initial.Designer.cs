@@ -10,8 +10,8 @@ using clockECommerce.Data.EF;
 namespace clockECommerce.Data.Migrations
 {
     [DbContext(typeof(clockECommerceDbContext))]
-    [Migration("20211202075429_HomeData")]
-    partial class HomeData
+    [Migration("20220110001653_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,7 +181,7 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "2384ac56-5694-48ea-9c6a-6ab90ecd3483",
+                            ConcurrencyStamp = "c9b91342-f535-4ca9-8da7-442236d07d06",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -254,14 +254,14 @@ namespace clockECommerce.Data.Migrations
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
                             Address = "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh",
-                            ConcurrencyStamp = "cac3c2eb-19eb-4e97-8304-fd2dbbfdd4c4",
+                            ConcurrencyStamp = "d6d30940-f2d6-4478-99d9-2a897013d3f1",
                             Email = "lequocanh.qa@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Quoc Anh",
                             NormalizedEmail = "lequocanh.qa@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP69MbFcl9GVOSrsGxqGgHIlOeW5mDw4tgTn564YAExjL8aRMRhpdbrzc6yj+AuY+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELyhim7z/YRW3/LPBV9ImJKsbox+/yiL3AkgWN4UryEG1g9wEIX5YBjYEEcq8DbsDg==",
                             PhoneNumber = "0774642207",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -513,6 +513,11 @@ namespace clockECommerce.Data.Migrations
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

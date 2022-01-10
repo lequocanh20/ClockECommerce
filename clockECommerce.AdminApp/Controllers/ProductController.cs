@@ -170,6 +170,7 @@ namespace clockECommerce.AdminApp.Controllers
             var detailVm = new ProductViewModel()
             {
                 Price = product.Price,
+                originPrice = product.originPrice,
                 Stock = product.Stock,
                 Name = product.Name,
                 Category = category,

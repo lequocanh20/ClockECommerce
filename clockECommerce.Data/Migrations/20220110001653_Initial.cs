@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace clockECommerce.Data.Migrations
 {
-    public partial class HomeData : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,7 +231,8 @@ namespace clockECommerce.Data.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {
@@ -288,7 +289,7 @@ namespace clockECommerce.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "2384ac56-5694-48ea-9c6a-6ab90ecd3483", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "c9b91342-f535-4ca9-8da7-442236d07d06", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -298,7 +299,7 @@ namespace clockECommerce.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh", "cac3c2eb-19eb-4e97-8304-fd2dbbfdd4c4", "lequocanh.qa@gmail.com", true, false, null, "Quoc Anh", "lequocanh.qa@gmail.com", "admin", "AQAAAAEAACcQAAAAEP69MbFcl9GVOSrsGxqGgHIlOeW5mDw4tgTn564YAExjL8aRMRhpdbrzc6yj+AuY+w==", "0774642207", false, "", false, "admin" });
+                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh", "d6d30940-f2d6-4478-99d9-2a897013d3f1", "lequocanh.qa@gmail.com", true, false, null, "Quoc Anh", "lequocanh.qa@gmail.com", "admin", "AQAAAAEAACcQAAAAELyhim7z/YRW3/LPBV9ImJKsbox+/yiL3AkgWN4UryEG1g9wEIX5YBjYEEcq8DbsDg==", "0774642207", false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",

@@ -28,13 +28,13 @@ namespace clockECommerce.ViewModels.System.Users
                 .WithMessage("Mật khẩu phải bao gồm chữ cái viết hoa, thường và một con số");
 
             // Khi ta viết => {} thì sẽ tự động hiểu request là của Register và context là của CustomContext
-            RuleFor(x => x).Custom((request, context) =>
-              {
-                  if (request.Password != request.ConfirmPassword)
-                  {
-                      context.AddFailure("Mật khẩu xác nhận không khớp với mật khẩu");
-                  }
-              });
+            //RuleFor(x => x).Custom((request, context) =>
+            //  {
+            //      if (request.Password != request.ConfirmPassword)
+            //      {
+            //          context.AddFailure("Mật khẩu xác nhận không khớp với mật khẩu");
+            //      }
+            //  });
         }
     }
 }

@@ -47,9 +47,9 @@ namespace clockECommerce.Application.System.Users
 
             // Trả về một SignInResult, tham số cuối là IsPersistent kiểu bool
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
-            if (!result.Succeeded && user.LockoutEnabled == false)
+            if (user.EmailConfirmed == false)
             {
-                return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
+                return new ApiErrorResult<string>(new string("Tài khoản chưa xác thực. Vui lòng xác thực tài khoản trước khi đăng nhập."));
             }
             else if (result.Succeeded && user.LockoutEnabled == true)
             {
@@ -59,10 +59,7 @@ namespace clockECommerce.Application.System.Users
             {
                 return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
             }    
-            else if(result.Succeeded && user.EmailConfirmed == false)
-            {
-                return new ApiErrorResult<string>(new string("Tài khoản chưa xác thực. Vui lòng xác thực tài khoản trước khi đăng nhập."));
-            }    
+               
             var roles = await _userManager.GetRolesAsync(user);
             if (roles.Count == 0)
             {
@@ -149,6 +146,11 @@ namespace clockECommerce.Application.System.Users
                 return new ApiErrorResult<string>(new string("Số điện thoại đã tồn tại"));
             }
 
+            if (request.Password != request.ConfirmPassword)
+            {
+                return new ApiErrorResult<string>(new string("Mật khẩu xác nhận không khớp với mật khẩu"));
+            }    
+
             user = new AppUser()
             {
                 Email = request.Email,
@@ -156,12 +158,13 @@ namespace clockECommerce.Application.System.Users
                 Name = request.Name,
                 UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
-                LockoutEnabled = false
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
+                user.LockoutEnabled = false;
+                await _context.SaveChangesAsync();
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 return new ApiSuccessResult<string>(token);
             }

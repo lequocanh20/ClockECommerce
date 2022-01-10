@@ -179,7 +179,7 @@ namespace clockECommerce.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "0151a386-7107-4e8a-b7bf-84968597dff6",
+                            ConcurrencyStamp = "c9b91342-f535-4ca9-8da7-442236d07d06",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -252,14 +252,14 @@ namespace clockECommerce.Data.Migrations
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
                             Address = "123 Lien Ap 2-6 X.Vinh Loc A H. Binh Chanh",
-                            ConcurrencyStamp = "13a10ddd-7f7a-4a07-b6e7-2cb077d7a700",
+                            ConcurrencyStamp = "d6d30940-f2d6-4478-99d9-2a897013d3f1",
                             Email = "lequocanh.qa@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Quoc Anh",
                             NormalizedEmail = "lequocanh.qa@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGEkBQfvgtqpDhyx1VTNGGEikXDLAOdK3+ntVc/+S/MIODLfd79hp0eoL4IkWai3CQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELyhim7z/YRW3/LPBV9ImJKsbox+/yiL3AkgWN4UryEG1g9wEIX5YBjYEEcq8DbsDg==",
                             PhoneNumber = "0774642207",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
